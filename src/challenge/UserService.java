@@ -7,7 +7,7 @@ public class UserService {
 
     public void addUser(UserRecord user) {
         if (user == null) {
-            System.out.println("User cannot null.");
+            System.out.println("User cannot be null.");
             return;
         }
 
@@ -17,9 +17,20 @@ public class UserService {
         }
 
         if (user.getId() < 1) {
-            System.out.println("id cannot be less than one.");
+            System.out.println("Id must be greater than zero.");
             return;
         }
+
+        if (findUserById(user.getId()) != null) {
+            System.out.println("Duplicate id. User not added.");
+            return;
+        }
+
+        if (findUserByEmail(user.getEmail()) != null) {
+            System.out.println("Duplicate email. User not added.");
+            return;
+        }
+
 
         users.add(user);
         System.out.println("User added successfully.");
@@ -40,6 +51,8 @@ public class UserService {
         if (email == null) {
             return null;
         }
+
+        email = email.trim();
 
         for (UserRecord user : users) {
             if (email.equals(user.getEmail())) {
@@ -65,44 +78,31 @@ public class UserService {
     }
 
     public void changeActiveById(int id, boolean newValue) {
-        if (id < 1) {
+        UserRecord user = findUserById(id);
+
+        if (user == null) {
+            System.out.println("Id not found.");
             return;
         }
 
-
-        for (UserRecord user : users) {
-            if (id == user.getId()) {
-                user.setActive(newValue);
-                break;
-            }
-        }
+        user.setActive(newValue);
+        System.out.println("Active updated.");
     }
 
     public void removeUserById(int id) {
-        if (id < 1) {
+        UserRecord user = findUserById(id);
+
+        if (user == null) {
+            System.out.println("User not found.");
             return;
         }
 
-        UserRecord userToRemove = null;
-
-        for (UserRecord user : users) {
-            if (id == user.getId()) {
-                userToRemove = user;
-                break;
-            }
-        }
-
-        if (userToRemove != null) {
-            users.remove(userToRemove);
-        }
+        users.remove(user);
+        System.out.println("User successfully removed.");
     }
 
     public int countValidUsers() {
         int validUsers = 0;
-
-        if (users.isEmpty()) {
-            return 0;
-        }
 
         for (UserRecord user : users) {
             if (user.isValidUser()) {
@@ -116,10 +116,6 @@ public class UserService {
     public int countActiveUsers() {
         int activeUsers = 0;
 
-        if (users.isEmpty()) {
-            return 0;
-        }
-
         for (UserRecord user : users) {
             if (user.isActive()) {
                 activeUsers++;
@@ -129,17 +125,7 @@ public class UserService {
         return activeUsers;
     }
 
-    public void showTotalUsers() {
-        int totalUsers = 0;
-
-        if (users.isEmpty()) {
-            return;
-        }
-
-        for (int i = 0; i < users.size(); i++) {
-            totalUsers++;
-        }
-
-        System.out.println("Total users: " + totalUsers);
+    public int getTotalUsers() {
+        return users.size();
     }
 }
