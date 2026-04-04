@@ -20,6 +20,7 @@ public class Day12Challenge {
             System.out.println("|----------------------------------------|");
             System.out.print("Choose an option: ");
             option = scanner.nextInt();
+            scanner.nextLine();
 
             if (option == 1) {
                 System.out.println("\n---- REGISTER USER ----");
@@ -39,13 +40,18 @@ public class Day12Challenge {
 
                 System.out.print("Enter active (true/false): ");
                 boolean active = scanner.nextBoolean();
+                scanner.nextLine();
 
                 userService.addUser(new UserRecord(id, fullName, email, role, active));
 
             } else if (option == 2) {
                 System.out.println("\n---- LIST USERS ----");
-
                 userService.listUsers();
+
+                System.out.println("\n---- SUMMARY ----");
+                System.out.println("Total users: " + userService.getTotalUsers());
+                System.out.println("Valid users: " + userService.countValidUsers());
+                System.out.println("Active users: " + userService.countActiveUsers());
 
             } else if (option == 3) {
                 System.out.println("\n---- SEARCH USER BY EMAIL ----");
@@ -69,6 +75,7 @@ public class Day12Challenge {
 
                 System.out.print("Enter a new value: ");
                 boolean newValue = scanner.nextBoolean();
+                scanner.nextLine();
 
                 userService.changeActiveById(id, newValue);
 
@@ -77,6 +84,7 @@ public class Day12Challenge {
 
                 System.out.print("Enter an id: ");
                 int id = scanner.nextInt();
+                scanner.nextLine();
 
                 userService.removeUserById(id);
 

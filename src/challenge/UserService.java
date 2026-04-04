@@ -31,7 +31,6 @@ public class UserService {
             return;
         }
 
-
         users.add(user);
         System.out.println("User added successfully.");
     }
@@ -52,10 +51,10 @@ public class UserService {
             return null;
         }
 
-        email = email.trim();
+        String normalizedEmail = email.trim();
 
         for (UserRecord user : users) {
-            if (email.equals(user.getEmail())) {
+            if (normalizedEmail.equals(user.getEmail())) {
                 return user;
             }
         }
@@ -86,7 +85,7 @@ public class UserService {
         }
 
         user.setActive(newValue);
-        System.out.println("Active updated.");
+        System.out.println("Active status updated successfully.");
     }
 
     public void removeUserById(int id) {
@@ -98,7 +97,7 @@ public class UserService {
         }
 
         users.remove(user);
-        System.out.println("User successfully removed.");
+        System.out.println("User removed successfully.");
     }
 
     public int countValidUsers() {

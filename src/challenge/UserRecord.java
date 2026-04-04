@@ -9,9 +9,9 @@ public class UserRecord {
 
     public UserRecord(int id, String fullName, String email, String role, boolean active) {
         this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.role = role;
+        this.fullName = fullName == null ? null : fullName.trim();
+        this.email = email == null ? null : email.trim();
+        this.role = role == null ? null : role.trim();
         this.active = active;
     }
 
@@ -41,20 +41,17 @@ public class UserRecord {
 
     public boolean isValidUser() {
         return fullName != null
-            && fullName.trim().length() >= 3
+            && fullName.length() >= 3
             && email != null
             && email.contains("@")
             && role != null
-            && role.trim().length() >= 4;
+            && role.length() >= 4;
     }
 
     public void showUserSummary() {
-        System.out.println(
-            "Id: " + id +
-            " | Full name: " + fullName +
-            " | Email: " + email +
-            " | Role: " + role +
-            " | Active: " + active
+        System.out.printf(
+            "Id: %d | Full name: %s | Email: %s | Role: %s | Active: %b%n",
+            id, fullName, email, role, active
         );
     }
 }
