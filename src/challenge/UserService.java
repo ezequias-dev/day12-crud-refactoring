@@ -5,21 +5,29 @@ import java.util.ArrayList;
 public class UserService {
     private final ArrayList<UserRecord> users = new ArrayList<>();
 
-    public boolean addUser(UserRecord user) {
+    public void addUser(UserRecord user) {
         if (user == null) {
-            return false;
+            System.out.println("User cannot null.");
+            return;
         }
 
         if (!user.isValidUser()) {
-            return false;
+            System.out.println("Invalid user data.");
+            return;
+        }
+
+        if (user.getId() < 1) {
+            System.out.println("id cannot be less than one.");
+            return;
         }
 
         users.add(user);
-        return true;
+        System.out.println("User added successfully.");
     }
 
     public void listUsers() {
         if (users.isEmpty()) {
+            System.out.println("No users registered.");
             return;
         }
 
